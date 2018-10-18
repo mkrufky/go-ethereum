@@ -119,6 +119,7 @@ var (
 		utils.DeveloperFlag,
 		utils.DeveloperPeriodFlag,
 		utils.TestnetFlag,
+		utils.AtheiosFlag,
 		utils.EllaismFlag,
 		utils.ClassicFlag,
 		utils.SocialFlag,

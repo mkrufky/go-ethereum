@@ -152,6 +152,12 @@ func NewNode(datadir string, config *NodeConfig) (stack *Node, _ error) {
 				config.EthereumNetworkID = 3
 			}
 		}
+		if config.EthereumGenesis == AtheiosGenesis() {
+			genesis.Config = params.AtheiosChainConfig
+			if config.EthereumNetworkID == 1 {
+				config.EthereumNetworkID = 1620
+			}
+		}
 		if config.EthereumGenesis == EllaismGenesis() {
 			genesis.Config = params.EllaismChainConfig
 			if config.EthereumNetworkID == 1 {

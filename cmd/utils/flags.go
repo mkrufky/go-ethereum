@@ -136,6 +136,10 @@ var (
 		Name:  "testnet",
 		Usage: "Ropsten network: pre-configured proof-of-work test network",
 	}
+	AtheiosFlag = cli.BoolFlag{
+		Name:  "atheios",
+		Usage: "Atheios network: pre-configured Atheios mainnet",
+	}
 	EllaismFlag = cli.BoolFlag{
 		Name:  "ellaism",
 		Usage: "Ellaism network: pre-configured Ellaism mainnet",
@@ -632,6 +636,9 @@ func MakeDataDir(ctx *cli.Context) string {
 		if ctx.GlobalBool(TestnetFlag.Name) {
 			return filepath.Join(path, "testnet")
 		}
+		if ctx.GlobalBool(AtheiosFlag.Name) {
+			return filepath.Join(path, "atheios")
+		}
 		if ctx.GlobalBool(EllaismFlag.Name) {
 			return filepath.Join(path, "ellaism")
 		}
@@ -699,6 +706,8 @@ func setBootstrapNodes(ctx *cli.Context, cfg *p2p.Config) {
 		}
 	case ctx.GlobalBool(TestnetFlag.Name):
 		urls = params.TestnetBootnodes
+	case ctx.GlobalBool(AtheiosFlag.Name):
+		urls = params.AtheiosBootnodes
 	case ctx.GlobalBool(EllaismFlag.Name):
 		urls = params.EllaismBootnodes
 	case ctx.GlobalBool(ClassicFlag.Name):
@@ -1001,6 +1010,8 @@ func SetNodeConfig(ctx *cli.Context, cfg *node.Config) {
 		cfg.DataDir = "" // unless explicitly requested, use memory databases
 	case ctx.GlobalBool(TestnetFlag.Name):
 		cfg.DataDir = filepath.Join(node.DefaultDataDir(), "testnet")
+	case ctx.GlobalBool(AtheiosFlag.Name):
+		cfg.DataDir = filepath.Join(node.DefaultDataDir(), "atheios")
 	case ctx.GlobalBool(EllaismFlag.Name):
 		cfg.DataDir = filepath.Join(node.DefaultDataDir(), "ellaism")
 	case ctx.GlobalBool(ClassicFlag.Name):
@@ -1148,7 +1159,7 @@ func SetShhConfig(ctx *cli.Context, stack *node.Node, cfg *whisper.Config) {
 // SetEthConfig applies eth-related command line flags to the config.
 func SetEthConfig(ctx *cli.Context, stack *node.Node, cfg *eth.Config) {
 	// Avoid conflicting network flags
-	checkExclusive(ctx, DeveloperFlag, TestnetFlag, RinkebyFlag, EllaismFlag, ClassicFlag, SocialFlag, MixFlag)
+	checkExclusive(ctx, DeveloperFlag, TestnetFlag, RinkebyFlag, AtheiosFlag, EllaismFlag, ClassicFlag, SocialFlag, MixFlag)
 	checkExclusive(ctx, LightServFlag, SyncModeFlag, "light")
 
 	if ctx.GlobalIsSet(EllaismFlag.Name) {
@@ -1235,6 +1246,11 @@ func SetEthConfig(ctx *cli.Context, stack *node.Node, cfg *eth.Config) {
 			cfg.NetworkId = 3
 		}
 		cfg.Genesis = core.DefaultTestnetGenesisBlock()
+	case ctx.GlobalBool(AtheiosFlag.Name):
+		if !ctx.GlobalIsSet(NetworkIdFlag.Name) {
+			cfg.NetworkId = 1620
+		}
+		cfg.Genesis = core.DefaultAtheiosGenesisBlock()
 	case ctx.GlobalBool(EllaismFlag.Name):
 		if !ctx.GlobalIsSet(NetworkIdFlag.Name) {
 			cfg.NetworkId = 64
@@ -1398,6 +1414,8 @@ func MakeGenesis(ctx *cli.Context) *core.Genesis {
 	switch {
 	case ctx.GlobalBool(TestnetFlag.Name):
 		genesis = core.DefaultTestnetGenesisBlock()
+	case ctx.GlobalBool(AtheiosFlag.Name):
+		genesis = core.DefaultAtheiosGenesisBlock()
 	case ctx.GlobalBool(EllaismFlag.Name):
 		genesis = core.DefaultEllaismGenesisBlock()
 	case ctx.GlobalBool(ClassicFlag.Name):

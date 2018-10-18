@@ -32,6 +32,15 @@ func MainnetGenesis() string {
 	return ""
 }
 
+// AtheiosGenesis returns the JSON spec to use for the Atheios network.
+func AtheiosGenesis() string {
+	enc, err := json.Marshal(core.DefaultAtheiosGenesisBlock())
+	if err != nil {
+		panic(err)
+	}
+	return string(enc)
+}
+
 // EllaismGenesis returns the JSON spec to use for the Ellaism network.
 func EllaismGenesis() string {
 	enc, err := json.Marshal(core.DefaultEllaismGenesisBlock())

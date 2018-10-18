@@ -213,6 +213,8 @@ func (g *Genesis) configOrDefault(ghash common.Hash) *params.ChainConfig {
 		return params.MainnetChainConfig
 	case ghash == params.TestnetGenesisHash:
 		return params.TestnetChainConfig
+	case ghash == params.AtheiosGenesisHash:
+		return params.AtheiosChainConfig
 	case ghash == params.EllaismGenesisHash:
 		return params.EllaismChainConfig
 	case ghash == params.SocialGenesisHash:

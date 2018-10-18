@@ -27,6 +27,7 @@ import (
 var (
 	MainnetGenesisHash = common.HexToHash("0xd4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3")
 	TestnetGenesisHash = common.HexToHash("0x41941023680923e0fe4d74a34bdac8141f2540e3ae90623718e47d66d1ca4a2d")
+	AtheiosGenesisHash = common.HexToHash("0xb17a6645854471de4eff53b904a0d3eec3ef21c906afc6f1bc7dadbfc03b9448")
 	EllaismGenesisHash = common.HexToHash("0x4d7df65052bb21264d6ad2d6fe2d5578a36be12f71bf8d0559b0c15c4dc539b5")
 	SocialGenesisHash  = common.HexToHash("0xba8314d5c2ebddaf58eb882b364b27cbfa4d3402dacd32b60986754ac25cfe8d")
 	MixGenesisHash     = common.HexToHash("0x4fa57903dad05875ddf78030c16b5da886f7d81714cf66946a4c02566dbb2af5")
@@ -48,6 +49,25 @@ var (
 		DisposalBlock:       nil,
 		SocialBlock:         nil,
 		ConstantinopleBlock: nil,
+		Ethash:              new(EthashConfig),
+	}
+
+	// AtheiosChainConfig is the chain parameters to run a node on the Ellaism main network.
+	AtheiosChainConfig = &ChainConfig{
+		ChainID:             big.NewInt(1620),
+		HomesteadBlock:      big.NewInt(0),
+		DAOForkBlock:        nil,
+		DAOForkSupport:      true,
+		EIP150Block:         big.NewInt(0),
+		EIP150Hash:          common.HexToHash("0xb17a6645854471de4eff53b904a0d3eec3ef21c906afc6f1bc7dadbfc03b9448"),
+		EIP155Block:         big.NewInt(10),
+		EIP158Block:         big.NewInt(10),
+		ByzantiumBlock:      nil,
+		DisposalBlock:       big.NewInt(0),
+		SocialBlock:         nil,
+		ConstantinopleBlock: nil,
+		ECIP1017EraRounds:   nil,
+		EIP160Block:         nil,
 		Ethash:              new(EthashConfig),
 	}
 
