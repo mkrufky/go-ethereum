@@ -34,6 +34,9 @@ import (
 	"golang.org/x/crypto/sha3"
 )
 
+// Deprecated: For backward compatibility as other packages depend on these
+func Sha3Hash(data ...[]byte) common.Hash { return Keccak256Hash(data...) }
+
 var (
 	secp256k1N, _  = new(big.Int).SetString("fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141", 16)
 	secp256k1halfN = new(big.Int).Div(secp256k1N, big.NewInt(2))
